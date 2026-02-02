@@ -1,1478 +1,799 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Sabha Al salem Zone</title>
+  <title>Sabha Al Salem Zone</title>
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --primary: #10B981;
-      --primary-light: #34D399;
       --primary-dark: #059669;
-      --primary-gradient: linear-gradient(135deg, #10B981 0%, #34D399 100%);
-      --secondary: #059669;
-      --secondary-light: #10B981;
-      --accent: #34D399;
-      --accent-light: #6EE7B7;
-      --dark: #1F2937;
+      --accent: #F59E0B;
+      --dark: #111827;
       --dark-light: #374151;
       --light: #F9FAFB;
       --white: #FFFFFF;
       --gray: #9CA3AF;
       --gray-light: #E5E7EB;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      --primary-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.3);
-      --secondary-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.3);
-      --accent-shadow: 0 4px 14px 0 rgba(52, 211, 153, 0.3);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.4);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --shadow-primary: 0 4px 20px rgba(16, 185, 129, 0.4);
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--white);
-      background-attachment: fixed;
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
       color: var(--dark);
       min-height: 100vh;
-      padding: 0;
-      padding-top: 0;
-      text-align: center;
-      padding-bottom: 90px; 
-      position: relative;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(52, 211, 153, 0.1) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-radius: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      box-shadow: var(--shadow-xl);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .header {
-      padding: 12px 16px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(10px);
-    }
-    .search-container {
-      position: relative;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    #searchInput {
-      width: 100%;
-      padding: 12px 44px 12px 44px;
-      font-size: 15px;
-      font-weight: 500;
-      border-radius: 16px;
-      border: 2px solid transparent;
-      outline: none;
-      background: var(--white);
-      color: var(--dark);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: var(--shadow);
-    }
-    #searchInput::placeholder {
-      color: var(--gray);
-    }
-    #searchInput:focus {
-      box-shadow: var(--primary-shadow);
-      border-color: var(--primary);
-      transform: translateY(-1px);
-      background: var(--white);
-    }
-    .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--gray);
-      font-size: 16px;
-      pointer-events: none;
-      transition: color 0.3s ease;
-    }
-    #searchInput:focus ~ .search-icon {
-      color: var(--primary);
-    }
-    .clear-search {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--gray-light);
-      border: none;
-      color: var(--dark);
-      cursor: pointer;
-      font-size: 12px;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 6px;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .clear-search.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .clear-search:hover {
-      background: var(--primary);
-      color: var(--white);
-      transform: translateY(-50%) scale(1.1);
-    }
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 12px 16px;
-      gap: 8px;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(0,0,0,0.05);
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-    }
-    .nav-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .filter-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: var(--white);
-      color: var(--dark);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      transform: translateY(0);
-      border: 2px solid transparent;
-    }
-    
-    .filter-btn.active {
-      background: var(--primary-gradient);
-      color: var(--white);
-      box-shadow: var(--primary-shadow);
-      transform: translateY(-2px);
-      border-color: transparent;
-    }
-    
-    .filter-btn:hover:not(.active) {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: var(--shadow-lg);
-      background: var(--light);
-      color: var(--primary);
-    }
-    
-    .filter-btn i {
-      font-size: 18px;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .filter-btn:active i {
-      transform: scale(0.9);
-    }
-    
-    .filter-btn.active i {
-      animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    .filter-btn#addNewBtn {
-      background: var(--dark);
-      color: var(--white);
-    }
-    .filter-btn#addNewBtn:hover {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    .location-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--white);
-      color: var(--dark);
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      border: 2px solid transparent;
-    }
-    
-    .location-btn:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: var(--accent-shadow);
-      background: var(--light);
-      color: var(--primary);
-    }
-    
-    .location-btn.active {
-      background: var(--primary-gradient);
-      color: var(--white);
-      box-shadow: var(--primary-shadow);
-      transform: translateY(-2px);
-      border-color: transparent;
-    }
-    
-    .location-btn.active i {
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.8; }
-    }
-    .welcome-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      min-height: 60vh;
-      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .welcome-icon {
-      font-size: 60px;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 20px;
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .welcome-text {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 8px;
-    }
-    .welcome-subtext {
-      font-size: 15px;
-      color: var(--gray);
-      font-weight: 500;
-    }
-    .loading-dots {
-      display: inline-flex;
-      gap: 4px;
-      margin-left: 8px;
-    }
-    .loading-dots span {
-      width: 6px;
-      height: 6px;
-      background: var(--primary);
-      border-radius: 50%;
-      animation: bounce-dots 1.4s ease-in-out infinite;
-    }
-    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce-dots {
-      0%, 60%, 100% { transform: translateY(0); }
-      30% { transform: translateY(-12px); }
-    }
-    .locations-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      padding: 16px;
       padding-bottom: 100px;
-      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .location {
-      padding: 16px;
       position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: left;
+      overflow-x: hidden;
     }
-    .location:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1;
+      background: 
+        radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.08), transparent 40%),
+        radial-gradient(circle at 90% 10%, rgba(245, 158, 11, 0.08), transparent 40%);
+      animation: bgMove 15s ease-in-out infinite alternate;
     }
-    .location::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--primary-gradient);
-      background-size: 200% 100%;
-      animation: gradient-flow 3s ease infinite;
+    @keyframes bgMove { from { background-size: 100% 100%; } to { background-size: 120% 120%; } }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      padding: 12px 16px;
     }
-    @keyframes gradient-flow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
+    .search-wrapper { position: relative; width: 100%; }
+    #searchInput {
+      width: 100%; padding: 12px 40px 12px 16px;
+      border-radius: 16px; 
+      border: 1px solid #000000;
+      background: var(--white); font-size: 15px;
+      box-shadow: var(--shadow-sm); transition: all .3s;
     }
-    .location.nearby {
-      border: 2px solid var(--primary);
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    #searchInput:focus { border-color: var(--primary); box-shadow: var(--shadow-primary); outline: none; }
+    #clearSearch {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: var(--gray-light); border: none; color: var(--gray);
+      width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
     }
-    .location.nearby::after {
-      content: 'Near you!';
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: var(--primary);
-      color: var(--white);
-      font-size: 9px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 10px;
-      animation: fadeIn 0.5s ease;
+    #clearSearch.visible { display: flex; }
+
+    main { padding: 16px; max-width: 800px; margin: 0 auto; }
+    
+    #welcomeScreen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 60vh; text-align: center; animation: fadeIn .6s ease;
     }
-    .location-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 8px;
+    .icon-large { font-size: 48px; color: var(--primary); margin-bottom: 16px; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .loading-dots { display: flex; gap: 4px; margin-top: 10px; justify-content: center; }
+    .dot { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; animation: bounce 1.4s infinite; }
+    .dot:nth-child(2) { animation-delay: .2s; } .dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    #skeletonLoader { display: none; gap: 12px; }
+    .skeleton {
+      background: var(--gray-light); border-radius: 12px; padding: 16px;
+      animation: pulse 1.5s infinite;
+      border: 1px solid #e5e7eb;
     }
-    .location-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--dark);
+    .sk-line { height: 12px; margin-bottom: 8px; border-radius: 4px; background: #e2e8f0; }
+    .sk-title { width: 60%; height: 18px; margin-bottom: 12px; margin-left: auto; margin-right: auto; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: .6; } 100% { opacity: 1; } }
+
+    #locationList { display: none; grid-template-columns: 1fr; gap: 12px; }
+    
+    .card {
+      background: var(--white); border-radius: 16px; padding: 16px;
+      box-shadow: var(--shadow-sm); 
+      border: 1px solid #000000;
+      position: relative; overflow: visible; 
+      transition: transform .2s;
       text-align: center;
-      padding: 8px 16px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(52, 211, 153, 0.08) 100%);
-      width: 100%;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .location-distance {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 12px;
+    .card.nearby { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
+    
+    .card-header { 
+      display: flex; 
+      justify-content: center; 
+      position: relative; 
+      margin-bottom: 12px; 
       width: 100%;
     }
-    .distance-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
+    .card-title { 
+      font-weight: 700; 
+      font-size: 16px; 
+      color: var(--dark); 
+      width: 100%; 
+      padding-right: 30px; 
+      text-align: center; 
+      margin: 0 auto; 
     }
-    .distance-item.distance {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--secondary);
-    }
-    .distance-item.time {
-      background: rgba(52, 211, 153, 0.1);
-      color: var(--secondary);
-    }
-    .distance-item i {
-      font-size: 12px;
-    }
-    .favorite-btn {
-      background: var(--white);
-      border: 2px solid var(--gray-light);
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      color: var(--gray);
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    
+    .fav-btn {
+      position: absolute; top: 0; right: 0;
+      background: none; border: none; color: var(--gray-light); font-size: 18px; cursor: pointer; transition: .2s;
+      padding: 5px; 
       z-index: 2;
     }
-    .favorite-btn:hover {
-      transform: scale(1.1) rotate(15deg);
-      border-color: var(--secondary);
-      color: var(--secondary);
-    }
-    .favorite-btn.active {
-      background: var(--secondary);
-      border-color: var(--secondary);
-      color: var(--white);
-      animation: heartbeat 1.5s ease-in-out infinite;
-    }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
-    .action-buttons {
-      display: flex;
-      justify-content: center;
-    }
-    .copy-btn {
-      position: relative;
-      background: var(--dark);
-      color: var(--white);
-      border: none;
-      border-radius: 20px;
-      padding: 8px 20px;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 12px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .copy-btn:hover {
-      background: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: var(--primary-shadow);
-    }
-    .copy-btn.copied {
-      background: var(--secondary);
-      animation: success 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-    @keyframes success {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 3000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(5px);
-    }
-    .modal.show {
-      display: flex;
-      animation: modalFadeIn 0.3s ease;
-    }
-    @keyframes modalFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .modal-content {
-      background: var(--white);
-      border-radius: 24px;
-      padding: 24px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: left;
-    }
-    @keyframes modalSlideIn {
-      from { transform: translateY(20px) scale(0.95); opacity: 0; }
-      to { transform: translateY(0) scale(1); opacity: 1; }
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .modal-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--dark);
-    }
-    .close-btn {
-      background: var(--gray-light);
-      border: none;
-      font-size: 16px;
-      color: var(--dark);
-      cursor: pointer;
-      transition: all 0.3s;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .close-btn:hover {
-      background: var(--secondary);
-      color: var(--white);
-      transform: rotate(90deg);
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--dark);
-      font-size: 14px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 2px solid var(--gray-light);
-      background: var(--light);
-      color: var(--dark);
-      font-size: 15px;
-      transition: all 0.3s;
-      font-family: inherit;
-    }
-    .form-group input:focus {
-      border-color: var(--primary);
-      background: var(--white);
-      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-      outline: none;
-    }
-    .form-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 24px;
-    }
-    .form-buttons button {
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 14px;
-      font-family: inherit;
-    }
-    .cancel-btn {
-      background: var(--gray-light);
-      color: var(--dark);
-    }
-    .cancel-btn:hover {
-      background: var(--gray);
-      color: var(--white);
-    }
-    .submit-btn {
-      background: var(--primary-gradient);
-      color: var(--white);
-    }
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--primary-shadow);
-    }
-    .no-results {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--dark);
-      display: none;
-      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .no-results i {
-      font-size: 48px;
-      margin-bottom: 16px;
-      opacity: 0.5;
-      color: var(--gray);
-    }
-    .no-results p {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--gray);
-    }
-    .scroll-to-top {
-      position: fixed;
-      bottom: 100px;
-      right: 16px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--primary-gradient);
-      color: var(--white);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: var(--shadow-lg);
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 999;
-      border: none;
-    }
-    .scroll-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .scroll-to-top:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--primary-shadow);
-    }
-    #loadingSkeletons {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      padding: 16px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .skeleton-card {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: var(--shadow-sm);
-    }
-    .skeleton {
-      background: linear-gradient(90deg, var(--gray-light) 25%, var(--white) 50%, var(--gray-light) 75%);
-      background-size: 200% 100%;
-      animation: skeleton-loading 1.5s infinite linear;
-      border-radius: 8px;
-      margin: 0 auto;
-    }
-    .skeleton-title {
-      height: 20px;
-      width: 60%;
-      margin-bottom: 12px;
-    }
-    .skeleton-text {
-      height: 14px;
-      width: 90%;
-      margin-bottom: 8px;
-    }
-    .skeleton-button {
-      height: 32px;
-      width: 100px;
-      border-radius: 16px;
-      margin: 12px auto 0;
-    }
-    @keyframes skeleton-loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+    .fav-btn.active { color: var(--accent); transform: scale(1.1); }
+
+    .card-body { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      gap: 8px; 
+      position: relative; 
     }
     
-    @media (min-width: 768px) {
-      .header {
-        padding: 20px;
+    .badges { 
+      display: flex; 
+      justify-content: center; 
+      gap: 8px; 
+      flex-wrap: wrap; 
+      width: 100%;
+    }
+    .badge {
+      font-size: 11px; padding: 4px 8px; border-radius: 12px; font-weight: 600;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .badge-dist { background: rgba(16, 185, 129, 0.1); color: var(--primary-dark); }
+    .badge-time { background: rgba(245, 158, 11, 0.1); color: #d97706; }
+
+    .copy-btn {
+      margin-top: 6px; 
+      padding: 6px 24px; 
+      background: var(--dark); 
+      color: var(--white); 
+      border: none;
+      border-radius: 8px; 
+      font-size: 11px; 
+      font-weight: 500; 
+      cursor: pointer;
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 5px;
+      transition: background .2s, transform .1s;
+      width: auto; 
+      position: relative; 
+      z-index: 1;
+    }
+    .copy-btn:active { transform: scale(0.95); }
+    .copy-btn:hover { background: var(--primary); }
+
+    .empty-state { text-align: center; padding: 40px; color: var(--gray); grid-column: 1/-1; }
+
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--glass-bg); backdrop-filter: blur(16px);
+      border-top: 1px solid var(--glass-border);
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 8px 12px max(8px, env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center;
+      color: var(--gray); font-size: 10px; font-weight: 600;
+      background: none; border: none; cursor: pointer; width: 20%;
+    }
+    .nav-item i { font-size: 18px; margin-bottom: 4px; transition: .3s; }
+    .nav-item.active { color: var(--primary); }
+    .nav-item.active i { transform: translateY(-3px); }
+
+    .fab-container {
+      position: relative; top: -24px;
+      background: var(--white); width: 50px; height: 50px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+    #addBtn {
+      width: 44px; height: 44px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white); font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-primary); transition: transform .2s;
+    }
+    #addBtn:active { transform: scale(0.9); }
+
+    .nav-item.gps-active { color: var(--primary-dark); }
+    .nav-item.gps-active i { animation: pulse-ring 2s infinite; }
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      z-index: 200; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s;
+    }
+    .modal-overlay.open { display: flex; opacity: 1; }
+    
+    .modal {
+      background: var(--white); width: 90%; max-width: 400px;
+      border-radius: 20px; padding: 20px; box-shadow: var(--shadow-lg);
+      transform: scale(0.9); transition: transform .3s;
+    }
+    .modal-overlay.open .modal { transform: scale(1); }
+    
+    .modal h3 { margin-bottom: 16px; font-size: 18px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 12px; color: var(--dark-light); margin-bottom: 4px; }
+    .form-group input {
+      width: 100%; padding: 10px; border: 1px solid var(--gray-light);
+      border-radius: 8px; font-family: inherit; outline: none;
+    }
+    .form-group input:focus { border-color: var(--primary); }
+    
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
+    .btn-cancel { background: var(--gray-light); color: var(--dark); }
+    .btn-confirm { background: var(--primary); color: var(--white); }
+
+    #toast {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-50px);
+      background: var(--dark); color: var(--white); padding: 10px 20px;
+      border-radius: 30px; font-size: 13px; font-weight: 500; z-index: 300;
+      box-shadow: var(--shadow-lg); transition: transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex; align-items: center; gap: 8px; white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+    #toast.success { background: var(--primary); }
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Enhanced Winner Animation Styles */
+    .confetti {
+      position: fixed; 
+      pointer-events: none;
+      z-index: 9999;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+    }
+    
+    @keyframes confetti-fall {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
       }
-      .search-container {
-        max-width: 700px;
+      100% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot));
+        opacity: 0;
       }
-      .bottom-nav {
-        max-width: 500px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 24px 24px 0 0;
-        margin-bottom: 0;
-        border: 1px solid rgba(0,0,0,0.05);
-        border-bottom: none;
-      }
-      .locations-container, #loadingSkeletons {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 24px;
-        padding: 24px;
-      }
-      .welcome-icon {
-        font-size: 80px;
-        margin-bottom: 24px;
-      }
-      .welcome-text {
-        font-size: 32px;
-      }
-      .scroll-to-top {
-        bottom: 40px;
-        right: 40px;
-        width: 50px;
-        height: 50px;
-      }
+    }
+
+    @media (min-width: 600px) {
+      #locationList { grid-template-columns: repeat(2, 1fr); }
+      .bottom-nav { max-width: 500px; left: 50%; transform: translateX(-50%); border-radius: 20px 20px 0 0; }
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="search-container">
-      <div class="search-wrapper">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" id="searchInput" placeholder="Search restaurants..." autocomplete="off">
-        <button class="clear-search" id="clearSearch" aria-label="Clear search">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
+
+  <div id="toast"><i class="fas fa-info-circle"></i> <span>Message</span></div>
+
+  <header>
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="Search restaurants..." autocomplete="off">
+      <button id="clearSearch"><i class="fas fa-times"></i></button>
     </div>
   </header>
-  
+
   <main>
-    <div class="welcome-container" id="welcomeContainer">
-      <i class="fas fa-utensils welcome-icon"></i>
-      <h1 class="welcome-text">Please Wait</h1>
-      <p class="welcome-subtext">
-        <h5>Welcome to Sabha Al Salem Zone</h5>
-        <div class="loading-dots" id="initialLoadingDots">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </p>
-    </div>
-
-    <div id="loadingSkeletons" style="display: none;">
-      <div class="skeleton-card">
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-button"></div>
-      </div>
-      <div class="skeleton-card">
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-button"></div>
-      </div>
-      <div class="skeleton-card">
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-button"></div>
+    <div id="welcomeScreen">
+      <i class="fas fa-map-marked-alt icon-large"></i>
+      <h2 style="font-weight: 700; margin-bottom: 8px;">Please wait</h2>
+      <p style="color: var(--gray); font-size: 14px; margin-bottom: 20px;">Welcome to ardiya zone</p>
+      <div class="loading-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
 
-    <div class="locations-container" id="locationsContainer" style="display: none;"></div>
-
-    <div class="no-results" id="no-results">
-      <i class="fas fa-map-marked-alt"></i>
-      <p>Please add your Favorites Restaurant</p>
+    <div id="skeletonLoader">
+      <div class="skeleton"><div class="sk-line sk-title"></div><div class="sk-line" style="width: 40%; margin: 0 auto 8px;"></div></div>
+      <div class="skeleton"><div class="sk-line sk-title"></div><div class="sk-line" style="width: 40%; margin: 0 auto 8px;"></div></div>
+      <div class="skeleton"><div class="sk-line sk-title"></div><div class="sk-line" style="width: 40%; margin: 0 auto 8px;"></div></div>
     </div>
+
+    <div id="locationList"></div>
   </main>
 
-  <div class="modal" id="addRestaurantModal">
-    <div class="modal-content glass">
-      <div class="modal-header">
-        <h2 class="modal-title">Add New Restaurant</h2>
-        <button class="close-btn" id="closeModal" aria-label="Close modal">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <form id="addRestaurantForm">
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <h3>Add Restaurant</h3>
+      <form id="addForm">
         <div class="form-group">
-          <label for="restaurantName">Restaurant Name</label>
-          <input type="text" id="restaurantName" placeholder="Write Restaurant Name" required>
+          <label>Restaurant name</label>
+          <input type="text" id="newPlaceName" required placeholder="write restaurant name">
         </div>
         <div class="form-group">
-          <label for="restaurantCoords">Restaurant Code </label>
-          <input type="text" id="restaurantCoords" placeholder="Write Restaurant code" required>
-          <small style="color: var(--gray); font-size: 12px; margin-top: 4px; display:block;">You Cannot Delete it please write perfectly</small>
+          <label>Restaurant code </label>
+          <input type="text" id="newPlaceCoords" required placeholder="Exam:29.000000, 47.000000">
         </div>
-        <div class="form-buttons">
-          <button type="button" class="cancel-btn" id="cancelAdd">Cancel</button>
-          <button type="submit" class="submit-btn">Save</button>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" onclick="closeModal('addModal')">Cancel</button>
+          <button type="submit" class="btn btn-confirm">Save</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal for Manual Location Entry if GPS fails -->
-  <div class="modal" id="manualLocationModal">
-    <div class="modal-content glass">
-      <div class="modal-header">
-        <h2 class="modal-title">Enter Location Manually</h2>
-        <button class="close-btn" id="closeManualModal" aria-label="Close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <form id="manualLocationForm">
-        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
-          GPS was blocked by your browser or failed. Please enter your current coordinates manually.
-        </p>
+  <div class="modal-overlay" id="locationModal">
+    <div class="modal">
+      <h3>Set Location</h3>
+      <p style="font-size: 13px; color: var(--gray); margin-bottom: 12px;">
+        GPS not access. Please enter coordinates manually.
+      </p>
+      <form id="manualLocForm">
         <div class="form-group">
-          <label for="manualCoords">Your Coordinates</label>
-          <input type="text" id="manualCoords" placeholder="e.g. 29.3117, 47.4818" required>
+          <label>Your location code </label>
+          <input type="text" id="manualCoords" required placeholder="29.3117, 47.4818">
         </div>
-        <div class="form-buttons">
-          <button type="button" class="cancel-btn" id="cancelManual">Cancel</button>
-          <button type="submit" class="submit-btn">Set Location</button>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" onclick="closeModal('locationModal')">Cancel</button>
+          <button type="submit" class="btn btn-confirm">Set Location</button>
         </div>
       </form>
     </div>
   </div>
-
-  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
 
   <nav class="bottom-nav">
-    <div class="nav-item">
-      <button class="filter-btn active" data-filter="all" aria-label="All locations">
-        <i class="fas fa-list"></i>
-      </button>
+    <button class="nav-item active" onclick="setFilter('all')" id="navHome">
+      <i class="fas fa-home"></i> Home
+    </button>
+    <button class="nav-item" onclick="setFilter('fav')" id="navFav">
+      <i class="fas fa-star"></i> Favorites
+    </button>
+    
+    <div class="fab-container">
+      <button id="addBtn" onclick="openModal('addModal')"><i class="fas fa-plus"></i></button>
     </div>
-    <div class="nav-item">
-      <button class="filter-btn" data-filter="favorites" aria-label="Favorites">
-        <i class="fas fa-star"></i>
-      </button>
-    </div>
-    <div class="nav-item">
-      <button class="filter-btn" id="addNewBtn" aria-label="Add new location">
-        <i class="fas fa-plus"></i>
-      </button>
-    </div>
-    <div class="nav-item">
-      <button class="location-btn" id="locationBtn" aria-label="Get my location">
-        <i class="fas fa-location-dot"></i>
-      </button>
-    </div>
+    
+    <button class="nav-item" onclick="openMap()">
+      <i class="fas fa-map"></i> Maps
+    </button>
+    <button class="nav-item" onclick="toggleGPS()" id="navGps">
+      <i class="fas fa-crosshairs"></i> Gps
+    </button>
   </nav>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // DOM Elements
-      const searchInput = document.getElementById('searchInput');
-      const clearSearchBtn = document.getElementById('clearSearch');
-      const locationsContainer = document.getElementById('locationsContainer');
-      const noResults = document.getElementById('no-results');
-      const scrollToTopBtn = document.getElementById('scrollToTop');
-      const locationBtn = document.getElementById('locationBtn');
-      const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
-      const loadingSkeletons = document.getElementById('loadingSkeletons');
-      const welcomeContainer = document.getElementById('welcomeContainer');
-      
-      const addNewBtn = document.getElementById('addNewBtn');
-      const addRestaurantModal = document.getElementById('addRestaurantModal');
-      const closeModal = document.getElementById('closeModal');
-      const cancelAdd = document.getElementById('cancelAdd');
-      const addRestaurantForm = document.getElementById('addRestaurantForm');
-      const restaurantNameInput = document.getElementById('restaurantName');
-      const restaurantCoordsInput = document.getElementById('restaurantCoords');
-      
-      const manualLocationModal = document.getElementById('manualLocationModal');
-      const closeManualModal = document.getElementById('closeManualModal');
-      const cancelManual = document.getElementById('cancelManual');
-      const manualLocationForm = document.getElementById('manualLocationForm');
-      const manualCoordsInput = document.getElementById('manualCoords');
-      
-      // State
-      let restaurants = [];
-      let filteredRestaurants = [];
-      let favorites = JSON.parse(localStorage.getItem('ardiya_favorites')) || [];
-      let currentFilter = 'all';
-      let userLocation = null;
-      let locationWatchId = null;
-      let locationPermissionGranted = false;
-      let searchTimeout;
-      
-      // Constants
-      const GITHUB_URL = 'https://raw.githubusercontent.com/bdtech04/salem/refs/heads/main/salem.json';
-      const LOCATION_STORAGE_KEY = 'ardiya_user_location';
-      
-      function init() {
-        setupEventListeners();
-        
-        loadSavedLocation();
-        checkLocationPermission();
-        
-        setTimeout(() => {
-            loadFromGithub();
-        }, 2500);
+    const CONFIG = {
+      API_URL: 'https://raw.githubusercontent.com/bdtech04/salem/refs/heads/main/salem.json',
+      STORAGE_KEYS: {
+        FAVS: 'ardiya_favs',
+        USER_PLACES: 'ardiya_user_places',
+        USER_LOC: 'ardiya_user_loc'
       }
+    };
 
-      function saveLocation(lat, lng) {
-        const locationData = { latitude: lat, longitude: lng, timestamp: Date.now() };
-        localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(locationData));
-      }
+    const SAMPLE_DATA = [
+      { name: "Sample Restaurant 1", coords: "29.3117, 47.4818" },
+      { name: "Sample Restaurant 2", coords: "29.3345, 47.6578" },
+      { name: "Sample Restaurant 3", coords: "29.7371, 47.9135" }
+    ];
 
-      function loadSavedLocation() {
-        try {
-          const saved = localStorage.getItem(LOCATION_STORAGE_KEY);
-          if (saved) {
-            const data = JSON.parse(saved);
-            const isRecent = (Date.now() - data.timestamp) < (24 * 60 * 60 * 1000);
-            if (isRecent && data.latitude && data.longitude) {
-              userLocation = { latitude: data.latitude, longitude: data.longitude };
-              locationPermissionGranted = true;
-              locationBtn.classList.add('active');
-              applyFilter();
-            }
-          }
-        } catch (e) { console.error(e); }
-      }
-      
-      function setupEventListeners() {
-        searchInput.addEventListener('input', handleSearchInput);
-        searchInput.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') searchInput.blur();
-        });
-        clearSearchBtn.addEventListener('click', clearSearch);
-        locationBtn.addEventListener('click', handleLocationClick);
-        
-        filterBtns.forEach(btn => {
-          btn.addEventListener('click', handleFilter);
-        });
-        
-        window.addEventListener('scroll', () => {
-          scrollToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
-        });
-        
-        scrollToTopBtn.addEventListener('click', () => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        addNewBtn.addEventListener('click', openModal);
-        closeModal.addEventListener('click', closeModalHandler);
-        cancelAdd.addEventListener('click', closeModalHandler);
-        addRestaurantForm.addEventListener('submit', handleAddRestaurant);
-        
-        addRestaurantModal.addEventListener('click', (e) => {
-          if (e.target === addRestaurantModal) closeModalHandler();
-        });
+    let state = {
+      allPlaces: [],
+      userLocation: null,
+      filter: 'all',
+      search: ''
+    };
 
-        // Manual Location Modal
-        closeManualModal.addEventListener('click', closeManualModalHandler);
-        cancelManual.addEventListener('click', closeManualModalHandler);
-        manualLocationForm.addEventListener('submit', handleManualLocationSubmit);
-      }
-      
-      function handleSearchInput(e) {
-        const query = e.target.value.trim();
-        clearSearchBtn.classList.toggle('visible', query.length > 0);
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(handleSearch, 300);
-      }
-      
-      function clearSearch() {
-        searchInput.value = '';
-        clearSearchBtn.classList.remove('visible');
-        handleSearch();
-        searchInput.focus();
-      }
-      
-      function checkLocationPermission() {
-        if (!window.isSecureContext) {
-          console.warn("Location API requires HTTPS or localhost.");
-          return;
-        }
-        if ("geolocation" in navigator) {
-          navigator.permissions.query({ name: 'geolocation' }).then(result => {
-            if (result.state === 'granted') {
-              locationPermissionGranted = true;
-              startLocationWatching();
-            }
-          }).catch(() => {});
-        }
-      }
-      
-      function handleLocationClick() {
-        // 1. Check if already active
-        if (locationPermissionGranted && userLocation) {
-          applyFilter();
-          showToast('Location already active');
-          return;
-        }
+    const UI = {
+      welcome: document.getElementById('welcomeScreen'),
+      skeleton: document.getElementById('skeletonLoader'),
+      list: document.getElementById('locationList'),
+      search: document.getElementById('searchInput'),
+      clearSearch: document.getElementById('clearSearch'),
+      toast: document.getElementById('toast'),
+      navHome: document.getElementById('navHome'),
+      navFav: document.getElementById('navFav'),
+      navGps: document.getElementById('navGps') 
+    };
 
-        // 2. CHECK SECURE CONTEXT (Chrome Fix)
-        if (!window.isSecureContext && location.protocol !== 'file:') {
-           // Detect if running on HTTP or file://
-           const protocol = location.protocol;
-           let msg = "Chrome Security Block: Location requires HTTPS.";
-           if (protocol === 'file:') {
-               msg = "Chrome blocks GPS on local files. Use Localhost or HTTPS.";
-           }
-           
-           // Offer Manual Entry as Fallback
-           if(confirm(msg + "\n\nDo you want to enter your location manually?")) {
-               openManualModal();
-           }
-           return;
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+      loadLocalData();
+      initLocation();
+      fetchRemoteData();
 
-        if (!("geolocation" in navigator)) {
-          showToast('Geolocation not supported.');
-          return;
-        }
-        
-        locationBtn.disabled = true;
-        const icon = locationBtn.querySelector('i');
-        icon.className = 'fas fa-circle-notch fa-spin';
-        
-        // 3. Try High Accuracy first
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            handleLocationSuccess(position);
-          },
-          (error) => {
-            // 4. Fallback: Try Low Accuracy (Works better indoors/Chrome)
-            console.log("High accuracy failed, trying low accuracy...", error);
-            navigator.geolocation.getCurrentPosition(
-              (pos) => handleLocationSuccess(pos),
-              (err) => handleLocationError(err),
-              { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
-            );
-          },
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-        );
-      }
+      UI.search.addEventListener('input', (e) => {
+        state.search = e.target.value.toLowerCase();
+        UI.clearSearch.style.display = state.search ? 'flex' : 'none';
+        render();
+      });
+      UI.clearSearch.addEventListener('click', () => {
+        UI.search.value = '';
+        state.search = '';
+        UI.clearSearch.style.display = 'none';
+        render();
+      });
+      document.getElementById('addForm').addEventListener('submit', handleAddPlace);
+      document.getElementById('manualLocForm').addEventListener('submit', handleManualLoc);
+    });
 
-      function handleLocationSuccess(position) {
-        userLocation = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-        saveLocation(userLocation.latitude, userLocation.longitude);
+    async function fetchRemoteData() {
+      try {
+        UI.welcome.style.display = 'none';
+        UI.skeleton.style.display = 'grid';
         
-        locationPermissionGranted = true;
-        locationBtn.disabled = false;
-        const icon = locationBtn.querySelector('i');
-        icon.className = 'fas fa-location-dot';
-        locationBtn.classList.add('active');
+        const res = await fetch(`${CONFIG.API_URL}?t=${Date.now()}`);
+        if (!res.ok) throw new Error('Network response was not ok');
         
-        startLocationWatching();
-        applyFilter();
-        showToast('Location access granted');
-      }
-      
-      function handleLocationError(error) {
-        locationBtn.disabled = false;
-        const icon = locationBtn.querySelector('i');
-        icon.className = 'fas fa-location-dot';
-        
-        let msg = 'Location access failed.';
-        if (error.code === error.PERMISSION_DENIED) {
-          msg = 'Permission denied. Check settings.';
-        } else if (error.code === error.POSITION_UNAVAILABLE) {
-          msg = 'Position unavailable.';
-        } else if (error.code === error.TIMEOUT) {
-          msg = 'Request timed out.';
-        }
-
-        // Offer Manual Entry as fallback
-        if(confirm(msg + "\n\nDo you want to enter coordinates manually?")) {
-            openManualModal();
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          state.allPlaces = data.filter(p => p.name && p.coords);
         } else {
-            showToast(msg);
+          throw new Error('Empty or invalid data');
         }
-      }
-
-      function openManualModal() {
-        manualLocationModal.classList.add('show');
-        manualCoordsInput.focus();
-      }
-
-      function closeManualModalHandler() {
-        manualLocationModal.classList.remove('show');
-        manualLocationForm.reset();
-      }
-
-      function handleManualLocationSubmit(e) {
-        e.preventDefault();
-        const coords = parseCoordinates(manualCoordsInput.value);
-        if(coords) {
-           userLocation = { latitude: coords.latitude, longitude: coords.longitude };
-           saveLocation(userLocation.latitude, userLocation.longitude);
-           locationPermissionGranted = true; // Treat manual as granted
-           locationBtn.classList.add('active');
-           
-           closeManualModalHandler();
-           applyFilter();
-           showToast('Manual location set successfully');
+      } catch (err) {
+        console.error('Fetch failed, using cache or sample data:', err);
+        
+        let localData = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.USER_PLACES) || '[]');
+        
+        if (localData.length > 0) {
+          state.allPlaces = localData;
         } else {
-           showToast('Invalid coordinates format.');
+          state.allPlaces = SAMPLE_DATA;
+          showToast('Using sample data (Network/URL error)', 'info');
         }
+      } finally {
+        UI.skeleton.style.display = 'none';
+        UI.list.style.display = 'grid';
+        render();
+      }
+    }
+
+    function loadLocalData() {
+      const favs = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.FAVS) || '[]');
+      state.favs = new Set(favs);
+      
+      const userPlaces = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.USER_PLACES) || '[]');
+      state.userPlaces = userPlaces;
+      
+      const cachedLoc = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.USER_LOC));
+      if (cachedLoc && (Date.now() - cachedLoc.ts < 24 * 60 * 60 * 1000)) {
+        state.userLocation = cachedLoc;
+        updateGPSIcon(true);
+      }
+    }
+
+    function initLocation() {
+      if (!navigator.geolocation) return;
+      navigator.permissions.query({ name: 'geolocation' }).then(result => {
+        if (result.state === 'granted') startGPSWatch();
+      }).catch(() => {});
+    }
+
+    function toggleGPS() {
+      if (state.userLocation) {
+        showToast('Location is active', 'success');
+        return;
       }
       
-      function startLocationWatching() {
-        if (locationWatchId !== null) {
-          navigator.geolocation.clearWatch(locationWatchId);
-        }
-        
-        locationWatchId = navigator.geolocation.watchPosition(
-          (position) => {
-            userLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            };
-            saveLocation(userLocation.latitude, userLocation.longitude);
-          },
-          () => {},
+      UI.navGps.querySelector('i').className = 'fas fa-circle-notch fa-spin';
+      
+      navigator.geolocation.getCurrentPosition(
+        (pos) => onLocationSuccess(pos.coords.latitude, pos.coords.longitude),
+        (err) => {
+          UI.navGps.querySelector('i').className = 'fas fa-crosshairs';
+          console.warn(err);
+          openModal('locationModal');
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    }
+
+    function startGPSWatch() {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(
+          (pos) => onLocationSuccess(pos.coords.latitude, pos.coords.longitude),
+          null,
           { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
         );
       }
-      
-      function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371e3; 
-        const φ1 = lat1 * Math.PI / 180;
-        const φ2 = lat2 * Math.PI / 180;
-        const Δφ = (lat2 - lat1) * Math.PI / 180;
-        const Δλ = (lon2 - lon1) * Math.PI / 180;
+    }
 
-        const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+    function onLocationSuccess(lat, lng) {
+      state.userLocation = { lat, lng, ts: Date.now() };
+      localStorage.setItem(CONFIG.STORAGE_KEYS.USER_LOC, JSON.stringify(state.userLocation));
+      updateGPSIcon(true);
+      render();
+    }
+
+    function handleManualLoc(e) {
+      e.preventDefault();
+      const val = document.getElementById('manualCoords').value;
+      const coords = parseCoords(val);
+      if (coords) {
+        onLocationSuccess(coords.lat, coords.lng);
+        closeModal('locationModal');
+        showToast('Location updated manually', 'success');
+      } else {
+        showToast('Invalid coordinates', 'error');
+      }
+    }
+
+    function updateGPSIcon(active) {
+      if (active) {
+        UI.navGps.classList.add('gps-active');
+        UI.navGps.querySelector('i').className = 'fas fa-crosshairs';
+      } else {
+        UI.navGps.classList.remove('gps-active');
+      }
+    }
+
+    function parseCoords(str) {
+      if (!str) return null;
+      const parts = str.split(/[ ,]+/).map(Number).filter(n => !isNaN(n));
+      if (parts.length >= 2) return { lat: parts[0], lng: parts[1] };
+      return null;
+    }
+
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371e3; 
+      const φ1 = lat1 * Math.PI/180, φ2 = lat2 * Math.PI/180;
+      const Δφ = (lat2-lat1) * Math.PI/180;
+      const Δλ = (lon2-lon1) * Math.PI/180;
+      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
                 Math.cos(φ1) * Math.cos(φ2) *
                 Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
 
-        return R * c;
-      }
+    function render() {
+      UI.list.innerHTML = '';
       
-      function estimateTravelTime(distance) {
-        return Math.ceil((distance / 1000) / 40 * 60); 
-      }
+      const combinedPlaces = [...state.allPlaces, ...state.userPlaces];
       
-      function parseCoordinates(coordString) {
-        if (!coordString) return null;
-        try {
-          const parts = coordString.split(/[ ,]+/);
-          const coords = parts.map(p => parseFloat(p.trim())).filter(n => !isNaN(n));
-          if (coords.length >= 2) {
-            return { latitude: coords[0], longitude: coords[1] };
-          }
-        } catch (e) { console.error(e); }
-        return null;
-      }
-      
-      function loadFromGithub() {
-        welcomeContainer.style.display = 'none';
-        loadingSkeletons.style.display = 'grid';
-        locationsContainer.style.display = 'none';
-        
-        fetch(`${GITHUB_URL}?t=${new Date().getTime()}`)
-          .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-          })
-          .then(data => {
-            if (Array.isArray(data)) {
-               restaurants = data.filter(item => item.name && item.coords);
-            } else {
-              throw new Error('Invalid format');
-            }
-            loadUserRestaurants();
-          })
-          .catch((err) => {
-            console.warn('Fetch failed, using local sample data:', err);
-            restaurants = getSampleRestaurants();
-            loadUserRestaurants();
-          })
-          .finally(() => {
-            loadingSkeletons.style.display = 'none';
-            locationsContainer.style.display = 'grid';
-            applyFilter();
-          });
-      }
-      
-      function getSampleRestaurants() {
-        return [
-          { name: "Al-Manshar Mall Food Court", coords: "29.3117, 47.4818" },
-          { name: "The Avenues", coords: "29.3345, 47.6578" },
-          { name: "Marina Mall", coords: "29.7371, 47.9135" },
-          { name: "Souk Sharq", coords: "29.667, 47.9833" },
-          { name: "360 Mall", coords: "29.3225, 47.6622" },
-          { name: "Sharq Market", coords: "29.3750, 47.9800" }
-        ];
-      }
-      
-      function loadUserRestaurants() {
-        const userRestaurants = JSON.parse(localStorage.getItem('ardiya_user_restaurants')) || [];
-        if (userRestaurants.length > 0) {
-          restaurants = [...restaurants, ...userRestaurants];
-        }
-      }
-      
-      function applyFilter() {
-        const query = searchInput.value.toLowerCase().trim();
-        
-        let baseList = currentFilter === 'favorites' 
-            ? restaurants.filter(r => favorites.includes(r.name))
-            : [...restaurants];
-        
-        let searchList = query 
-            ? baseList.filter(r => r.name.toLowerCase().includes(query))
-            : baseList;
-        
-        if (userLocation) {
-          const listWithDist = searchList.map(restaurant => {
-            const coords = parseCoordinates(restaurant.coords);
-            if (coords) {
-              const distance = calculateDistance(
-                userLocation.latitude, 
-                userLocation.longitude,
-                coords.latitude,
-                coords.longitude
-              );
-              const travelTime = estimateTravelTime(distance);
-              return { ...restaurant, distance, travelTime };
-            }
-            return { ...restaurant, distance: Infinity, travelTime: null };
-          });
+      let filtered = combinedPlaces.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(state.search);
+        const matchesFav = state.filter === 'fav' ? state.favs.has(p.name) : true;
+        return matchesSearch && matchesFav;
+      });
 
-          filteredRestaurants = listWithDist
-            .filter(r => r.distance !== Infinity)
-            .sort((a, b) => a.distance - b.distance);
+      if (state.userLocation) {
+        filtered.sort((a, b) => {
+          const cA = parseCoords(a.coords);
+          const cB = parseCoords(b.coords);
+          if (!cA) return 1; if (!cB) return -1;
+          const dA = getDistance(state.userLocation.lat, state.userLocation.lng, cA.lat, cA.lng);
+          const dB = getDistance(state.userLocation.lat, state.userLocation.lng, cB.lat, cB.lng);
+          return dA - dB;
+        });
+      } else {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
 
-        } else {
-          filteredRestaurants = searchList.sort((a, b) => a.name.localeCompare(b.name));
-        }
+      if (filtered.length === 0) {
+        UI.list.innerHTML = `<div class="empty-state"><i class="fas fa-search" style="font-size:24px; margin-bottom:8px;"></i><br>No places found</div>`;
+        return;
+      }
+
+      filtered.slice(0, 50).forEach(place => {
+        const coords = parseCoords(place.coords);
+        const isFav = state.favs.has(place.name);
         
-        renderRestaurants(filteredRestaurants);
-      }
-      
-      function handleSearch() {
-        applyFilter();
-      }
-      
-      function handleFilter(e) {
-        filterBtns.forEach(btn => btn.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        currentFilter = e.currentTarget.dataset.filter;
-        applyFilter();
-      }
-      
-      function renderRestaurants(restaurantsToRender) {
-        locationsContainer.innerHTML = '';
+        let distHtml = '';
+        let nearbyClass = '';
         
-        if (restaurantsToRender.length === 0) {
-          noResults.style.display = 'block';
-        } else {
-          noResults.style.display = 'none';
+        if (state.userLocation && coords) {
+          const distMeters = getDistance(state.userLocation.lat, state.userLocation.lng, coords.lat, coords.lng);
+          const distKm = (distMeters / 1000).toFixed(1);
+          const time = Math.ceil(distMeters / 1000 / 40 * 60);
           
-          restaurantsToRender.slice(0, 50).forEach((restaurant) => {
-            const isNearby = userLocation && restaurant.distance && restaurant.distance < 3000;
-            const element = createLocationElement(restaurant, isNearby);
-            locationsContainer.appendChild(element);
-          });
-        }
-      }
-      
-      function createLocationElement(restaurant, isNearby) {
-        const isFavorite = favorites.includes(restaurant.name);
-        
-        let distanceInfo = '';
-        if (restaurant.distance !== null && restaurant.distance !== Infinity) {
-          const distKm = (restaurant.distance / 1000).toFixed(1);
-          const time = restaurant.travelTime;
-          
-          distanceInfo = `
-            <div class="location-distance">
-              <div class="distance-item distance">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>${distKm} km</span>
-              </div>
-              ${time ? `
-              <div class="distance-item time">
-                <i class="fas fa-car"></i>
-                <span>${time} min</span>
-              </div>` : ''}
+          distHtml = `
+            <div class="badges">
+              <span class="badge badge-dist"><i class="fas fa-location-arrow"></i> ${distKm} km</span>
+              <span class="badge badge-time"><i class="fas fa-car"></i> ${time} min</span>
             </div>
           `;
+          if (distMeters < 3000) nearbyClass = 'nearby';
         } else {
-           distanceInfo = `
-            <div class="location-distance">
-               <div class="distance-item" style="background:var(--gray-light); color:var(--gray);">
-                 <i class="fas fa-map-pin"></i>
-                 <span>Enable GPS</span>
-               </div>
-            </div>
-           `;
+          distHtml = `<div class="badges"><span class="badge" style="background:#eee; color:#666;">No GPS Data</span></div>`;
         }
-        
-        const element = document.createElement('div');
-        element.className = `location glass ${isNearby ? 'nearby' : ''}`;
-        element.innerHTML = `
-          <button class="favorite-btn ${isFavorite ? 'active' : ''}" aria-label="Toggle favorite">
-            <i class="${isFavorite ? 'fas' : 'far'} fa-star"></i>
-          </button>
-          <div class="location-info">
-            ${distanceInfo}
-            <div class="location-name">${restaurant.name}</div>
+
+        const card = document.createElement('div');
+        card.className = `card ${nearbyClass}`;
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-title">${place.name}</div>
+            <button class="fav-btn ${isFav?'active':''}" onclick="toggleFav('${place.name}', this)">
+              <i class="${isFav?'fas':'far'} fa-star"></i>
+            </button>
           </div>
-          <div class="action-buttons">
-            <button class="copy-btn" data-coords="${restaurant.coords}" aria-label="Copy coordinates">
-              <i class="fas fa-copy"></i>
-              <span>Copy Location</span>
+          <div class="card-body">
+            ${distHtml}
+            <button class="copy-btn" onclick="copyToClip('${place.coords}', this)">
+              <i class="fas fa-copy"></i> Copy
             </button>
           </div>
         `;
+        UI.list.appendChild(card);
+      });
+    }
+
+    function setFilter(type) {
+      state.filter = type;
+      UI.navHome.classList.toggle('active', type === 'all');
+      UI.navFav.classList.toggle('active', type === 'fav');
+      render();
+    }
+
+    function toggleFav(name, btn) {
+      if (state.favs.has(name)) {
+        state.favs.delete(name);
+        btn.classList.remove('active');
+        btn.querySelector('i').className = 'far fa-star';
+      } else {
+        state.favs.add(name);
+        btn.classList.add('active');
+        btn.querySelector('i').className = 'fas fa-star';
+      }
+      localStorage.setItem(CONFIG.STORAGE_KEYS.FAVS, JSON.stringify([...state.favs]));
+      if (state.filter === 'fav') render();
+    }
+
+    function handleAddPlace(e) {
+      e.preventDefault();
+      const name = document.getElementById('newPlaceName').value.trim();
+      const coords = document.getElementById('newPlaceCoords').value.trim();
+      
+      if (name && parseCoords(coords)) {
+        const newPlace = { name, coords };
+        state.userPlaces.push(newPlace);
+        localStorage.setItem(CONFIG.STORAGE_KEYS.USER_PLACES, JSON.stringify(state.userPlaces));
         
-        const favoriteBtn = element.querySelector('.favorite-btn');
-        favoriteBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggleFavorite(restaurant.name, favoriteBtn);
+        closeModal('addModal');
+        e.target.reset();
+        
+        state.allPlaces.push(newPlace);
+        showToast('Place added successfully', 'success');
+        render();
+      }
+    }
+
+    // --- FIXED COPY & ANIMATION FUNCTION ---
+    function copyToClip(text, btn) {
+      // 1. Trigger animation IMMEDIATELY (Visual feedback)
+      fireConfetti(btn);
+
+      // 2. Handle Button State
+      const original = btn.innerHTML;
+      btn.innerHTML = `<i class="fas fa-check"></i> Done!`;
+      btn.style.background = 'var(--primary)';
+      
+      // Reset button after delay
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.style.background = '';
+      }, 1500);
+
+      // 3. Attempt to copy text (Logic separated from animation)
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).catch(err => {
+          console.error('Clipboard API failed, trying fallback', err);
+          fallbackCopy(text);
         });
-        
-        const copyBtn = element.querySelector('.copy-btn');
-        copyBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          copyCoords(restaurant.coords, copyBtn);
-        });
-        
-        return element;
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    // Fallback for non-secure contexts (file://) or older browsers
+    function fallbackCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";  // Avoid scrolling to bottom
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if(successful) {
+           // Optional: Show a specific toast if needed
+           // showToast('Copied via fallback', 'success');
+        }
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
       }
       
-      function toggleFavorite(restaurantName, btnElement) {
-        const index = favorites.indexOf(restaurantName);
-        const icon = btnElement.querySelector('i');
-        
-        if (index === -1) {
-          favorites.push(restaurantName);
-          btnElement.classList.add('active');
-          icon.className = 'fas fa-star';
-        } else {
-          favorites.splice(index, 1);
-          btnElement.classList.remove('active');
-          icon.className = 'far fa-star';
-        }
-        
-        localStorage.setItem('ardiya_favorites', JSON.stringify(favorites));
-        
-        if (currentFilter === 'favorites') {
-          applyFilter();
-        }
-      }
+      document.body.removeChild(textArea);
+    }
+
+    // --- WINNER ANIMATION LOGIC ---
+    function fireConfetti(element) {
+      // Ensure element is valid
+      if(!element) return;
+
+      // Get accurate button position
+      const rect = element.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
       
-      function copyCoords(coords, btnElement) {
-        navigator.clipboard.writeText(coords).then(() => {
-          const originalContent = btnElement.innerHTML;
-          
-          btnElement.innerHTML = `<i class="fas fa-check"></i><span>Copied!</span>`;
-          btnElement.classList.add('copied');
+      const colors = ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d'];
+      const particleCount = 40; 
 
-          setTimeout(() => {
-            btnElement.innerHTML = originalContent;
-            btnElement.classList.remove('copied');
-          }, 2000);
-        }).catch(() => {
-           showToast('Failed to copy');
-        });
-      }
+      for (let i = 0; i < particleCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        const isCircle = Math.random() < 0.5;
+        confetti.style.borderRadius = isCircle ? '50%' : '2px';
+        
+        // Set Start Position (Center of button) - Fixed position for viewport
+        confetti.style.left = `${centerX}px`;
+        confetti.style.top = `${centerY}px`;
+        
+        // Physics
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 60 + Math.random() * 100; 
+        
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity - 50; 
+        const rot = Math.random() * 720; 
 
-      function showToast(message, duration = 3000) {
-        const toast = document.createElement('div');
-        toast.textContent = message;
-        toast.style.position = 'fixed';
-        toast.style.bottom = '100px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.background = 'rgba(0,0,0,0.85)';
-        toast.style.color = 'white';
-        toast.style.padding = '12px 24px';
-        toast.style.borderRadius = '30px';
-        toast.style.fontSize = '14px';
-        toast.style.zIndex = '4000';
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.3s';
-        toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-        toast.style.maxWidth = '90%';
-        toast.style.textAlign = 'center';
+        confetti.style.setProperty('--tx', `${tx}px`);
+        confetti.style.setProperty('--ty', `${ty}px`);
+        confetti.style.setProperty('--rot', `${rot}deg`);
         
-        document.body.appendChild(toast);
-        
-        toast.offsetHeight;
-        toast.style.opacity = '1';
-        
+        const duration = 0.8 + Math.random() * 0.5;
+        confetti.style.animation = `confetti-fall ${duration}s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
+
+        document.body.appendChild(confetti);
+
+        // Cleanup
         setTimeout(() => {
-          toast.style.opacity = '0';
-          setTimeout(() => toast.remove(), 300);
-        }, duration);
+          confetti.remove();
+        }, duration * 1000);
       }
-      
-      function openModal() {
-        addRestaurantModal.classList.add('show');
-        restaurantNameInput.focus();
+    }
+
+    function openMap() {
+      if (state.userLocation) {
+        window.open(`https://www.openstreetmap.org/?mlat=${state.userLocation.lat}&mlon=${state.userLocation.lng}#map=14/${state.userLocation.lat}/${state.userLocation.lng}`, '_blank');
+      } else {
+        showToast('Enable GPS to see your location', 'info');
+        toggleGPS();
       }
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+    
+    function showToast(msg, type = 'info') {
+      UI.toast.querySelector('span').innerText = msg;
+      UI.toast.className = `show ${type === 'success' ? 'success' : ''}`;
+      UI.toast.querySelector('i').className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
       
-      function closeModalHandler() {
-        addRestaurantModal.classList.remove('show');
-        addRestaurantForm.reset();
-      }
-      
-      function handleAddRestaurant(e) {
-        e.preventDefault();
-        
-        const name = restaurantNameInput.value.trim();
-        const coords = restaurantCoordsInput.value.trim();
-        
-        const parsedCoords = parseCoordinates(coords);
-        if (!name || !parsedCoords) {
-          showToast('Please enter a valid name and coordinates.');
-          return;
-        }
-        
-        const newRestaurant = { name, coords };
-        restaurants.push(newRestaurant);
-        
-        const userRestaurants = JSON.parse(localStorage.getItem('ardiya_user_restaurants')) || [];
-        userRestaurants.push(newRestaurant);
-        localStorage.setItem('ardiya_user_restaurants', JSON.stringify(userRestaurants));
-        
-        closeModalHandler();
-        showToast('Restaurant added successfully!');
-        
-        if (currentFilter !== 'all' || searchInput.value) {
-          document.querySelector('[data-filter="all"]').click();
-          clearSearch();
-        } else {
-          applyFilter();
-        }
-      }
-      
-      init();
-    });
+      setTimeout(() => {
+        UI.toast.className = '';
+      }, 3000);
+    }
   </script>
 </body>
 </html>
